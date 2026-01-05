@@ -1,0 +1,48 @@
+
+name: csr-iol-star
+
+# Management network (optional but recommended)
+mgmt:
+  network: clab
+  ipv4_subnet: 172.20.20.0/24
+  ipv6_subnet: fd00:20:20::/64
+
+topology:
+  kinds:
+    vr-csr:
+      type: vr-csr
+      # Replace with your local image tag if different
+      image: vr-csr:17.03
+    iol:
+      type: iol
+      image: iol:latest
+
+  nodes:
+    IOL1:
+      kind: iol
+      mgmt_ipv4: 172.20.20.10/24
+    R1:
+
+
+    
+      kind: vr-csr
+      mgmt_ipv4: 172.20.20.11/24
+
+    R2:
+      kind: vr-csr
+      mgmt_ipv4: 172.20.20.12/24
+
+
+    R3:
+      kind: vr-csr
+      mgmt_ipv4: 172.20.20.13/24
+
+    R4:
+      kind: vr-csr
+      mgmt_ipv4: 172.20.20.14/24
+
+  links:
+    - endpoints: ["R1:eth1", "IOL1:eth1"]
+    - endpoints: ["R2:eth1", "IOL1:eth2"]
+    - endpoints: ["R3:eth1", "IOL1:eth3"]
+    - endpoints: ["R3:eth2", "R4:eth1"]
